@@ -11,3 +11,21 @@ wp-content/cache/
 wp-content/upgrade/
 wp-content/uploads/
 wp-content/wp-cache-config.php
+
+#java specific
+*.class
+
+#netbeans ignore personal stuff
+nbproject/
+
+## generic files to ignore
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+
+# Package Files #
+*.jar
+*.war
+*.ear
