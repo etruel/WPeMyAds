@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 === WPeMyAds ===
 Contributors: etruel
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7267TH4PT3GSW
@@ -103,3 +104,7 @@ You can either install it automatically from the WordPress admin, or do it manua
 
 == Upgrade Notice ==
 *Taken Version 0.3 (31 Jan 2008) of AdServe and adds lot of things
+=======
+# WPeMyAds
+Advertising server for WordPress. Can setup banner campaigns using different sized banners, set available impressions and count resulting clicks! 
+>>>>>>> master/master
