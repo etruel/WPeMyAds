@@ -14,7 +14,11 @@ function etruel_AdServe_AddPages() {
 	$table_name = $wpdb->prefix . "adserve";
 	if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
 		etruel_AdServe_CreateTable();
+	}else{
+		etruel_altertable_ads();
 	}
+	//update zones
+	etruel_Adserve_update_banners();
 	# add submenu
 	$mypage = add_menu_page('My Ads', 'My Ads', 'publish_posts',  'admanage', 'etruel_AdServe_Manage',plugin_dir_url( __FILE__ ) . 'files/Ad20.png');
 	add_submenu_page('admanage', 'Ads Manager', 'Ads Manager', 'publish_posts', 'admanage', 'etruel_AdServe_Manage');
@@ -40,7 +44,10 @@ function etruelmyads_load_scripts($hook) {
 	wp_enqueue_script( 'myads-scripts', plugin_dir_url( __FILE__ ) . 'files/myads.js', array( 'jquery' ), false, true );
 	wp_enqueue_style( 'myads-style', plugin_dir_url( __FILE__ ) . 'files/myads.css' );
 	wp_enqueue_style( 'oplugincss', plugin_dir_url( __FILE__ ) .'files/oplugins.css');
+	wp_enqueue_style( 'datetimepickercss', plugin_dir_url( __FILE__ ) .'files/jquery.datetimepicker.css');	
+	//script
 	wp_enqueue_script( 'opluginjs', plugin_dir_url( __FILE__ ) .'files/oplugins.js');
+	wp_enqueue_script('datetimepicker',plugin_dir_url(__FILE__).'files/jquery.datetimepicker.js',array("jquery"));
 
 	add_action( "admin_print_scripts", 'AdServe_admin_head',9999 );	
 }
@@ -67,6 +74,7 @@ div[id*=wpemyads] .widget-top .widget-title{padding-left: 28px;}
 	
 function AdServe_admin_head() { 
 	?>
+
 	<script type="text/javascript">
 		function stripslashes (str) {
 			stri = (str + '').replace(/\\(.?)/g, function (s, n1) {
@@ -93,13 +101,23 @@ function AdServe_admin_head() {
 			jQuery(formid).fadeIn();
 		}
 		
-		function loadData(id, title, scriptcode, url, src, email, keywords, width, height, user){
+		function loadData(id, title, scriptcode, url, src, email, keywords, width, height, user,dateto, dateuntil,checkingdate){
 			jQuery('#tableform .wrap h2').text('Edit Ad'); 
 			document.getElementById('buttonsave').value='Save'; 
 			document.getElementById('id').value = id; 
 			document.getElementById('title').value = title; 
 			document.getElementById('url').value = url; 
 			document.getElementById('user').value = user; 
+			document.getElementById('dateto').value = dateto;
+			document.getElementById('dateuntil').value = dateuntil;
+			if(checkingdate=='Y'){
+				jQuery('#checkingdate').attr("checked",true);
+				jQuery("#datefields_ads").show(500);
+			}else{
+				jQuery("#datefields_ads").hide(0);
+				jQuery("#dateto").val("");
+				jQuery("#dateuntil").val("");
+			}
 			if(scriptcode==1){
 				jQuery(".isscript_src").html('<textarea id="src" name="src" cols=80 rows=5></textarea>');
 			}else{
@@ -133,6 +151,7 @@ function AdServe_admin_head() {
 		}
 		
 		jQuery(document).ready( function($j) {
+
 			$j("#closefrm").click(function() {
 				jQuery('#uploadform').hide()
 				jQuery('#tableform').fadeOut(); 
@@ -162,6 +181,30 @@ function AdServe_admin_head() {
 					changeval(0);
 				}
 			});
+
+			//date piker
+			jQuery('#dateto,#dateuntil').datetimepicker({
+				 format:'Y-m-d H:m:s',
+			     minDate: getFormattedDate(new Date())
+					
+			});
+			jQuery('#checkingdate').click(function(){
+				if(jQuery(this).is(':checked')){
+					jQuery("#datefields_ads").show(500);	
+				}else{
+					jQuery("#datefields_ads").hide(0);
+					jQuery("#dateto").val("");
+					jQuery("#dateuntil").val("");
+				}
+			});
+
+			function getFormattedDate(date) {
+			    var day = date.getDate();
+			    var month = date.getMonth() + 1;
+			    var year = date.getFullYear().toString().slice(2);
+			    return day + '-' + month + '-' + year;
+			}
+
 		});
 	</script>
 	<?php
@@ -235,7 +278,9 @@ function etruel_AdServe_Manage() {
 	<?php
 	print "<div id='table-content'><table class='widefat AdsTable'><thead><tr><th scope='col'>Site</th><th scope='col'>Zones</th><th scope='col'>Active</th><th scope='col'>Impressions</th><th scope='col'>Clicks</th><th scope='col'>Ratio</th><th scope='col'>Credits</th>";
 	if(etruel_check_user_role('administrator') ) print "<th scope='col'>".__('User')."</th>";
-	print"<th scope='col'>Actions</th></tr></thead>";
+	print"<th scope='col'>Actions</th>
+	<th>A/D</th>
+	</tr></thead>";
 	print "<tbody id='the-list'>";
 	$qry = $wpdb->get_results("SELECT * FROM $table_name ORDER BY active DESC, credits DESC;");
 	
@@ -245,7 +290,11 @@ function etruel_AdServe_Manage() {
 		$user = ($rk->user !=null && $rk->user!="") ? $rk->user : $user_login ;  // si no tiene usuario le asigno el actual
 		//$user = (etruel_check_user_role('administrator')) ? $user : $user ;
 		$script = $rk->src;
-		$editform="loadData('{$rk->id}', '{$rk->title}', '{$rk->scriptcode}', '{$rk->url}', '$script', '{$rk->email}', '{$rk->keywords}', '{$rk->width}', '{$rk->height}','$user');";
+	//	$vardateto = date_i18n('d/m/Y H:m:s',strtotime($rk->dateto)); 
+	//	$vardateuntil = date_i18n('d/m/Y H:m:s',strtotime($rk->dateuntil));  
+		$vardateto = $rk->dateto;
+		$vardateuntil = $rk->dateuntil;
+		$editform="loadData('{$rk->id}', '{$rk->title}', '{$rk->scriptcode}', '{$rk->url}', '$script', '{$rk->email}', '{$rk->keywords}', '{$rk->width}', '{$rk->height}','$user','{$vardateto}','{$vardateuntil}','{$rk->checkingdate}');";
 		print "<tr id='fila{$rk->id}' class='adfila'>";
 		$tdtitle = "<td>";
 		if ($rk->url === '') {
@@ -280,6 +329,17 @@ function etruel_AdServe_Manage() {
 			print "<a onclick=\"return false;\" style='border:0px;'>";
 			print "<img src='" .plugin_dir_url( __FILE__ ) . "files/nodelete.gif' style='border: 0px solid #AB6400; margin:0; padding:0;'></a></td>\n";
 		}
+		if($rk->active!=1){
+			$estatus_message = 'Activate';
+			$value_estatus = 1;
+		}else{
+			$estatus_message = 'Desactivate';
+			$value_estatus = 0;
+		}		
+		$url_active = plugin_dir_url( __FILE__ ) . "adchangestatus.php?id=$rk->id&active=$value_estatus";
+		?>
+			<td><a href="<?php echo $url_active;  ?>"><?php echo $estatus_message; ?></a></td>
+		<?php 
 		print "</tr>";
 	}
 	print "</table></div>";
@@ -288,15 +348,26 @@ function etruel_AdServe_Manage() {
 	?>
 	<div id="tableform" style="display: <?php echo (!$first)?"block":"none";  ?>;">
    	<table><tr>
-	<td><div class="wrap"><div id="closefrm" title="Cancel and close">[x]</div><h2><?php echo (!$first)?"Add":"Edit";  ?> Ad</h2>
+	<td>
+		<div class="wrap"><div id="closefrm" title="Cancel and close">[x]</div>
+		<center><h2><?php echo (!$first)?"Add":"Edit";  ?> Ad</h2></center>
 		<form name="adform" id="adform" method="POST" action="<?php echo plugin_dir_url( __FILE__ ) . "adsave.php"; ?>">
 		<input type="hidden" name="id" id="id" value="">
 		<table>
+			<tr>
+				<td><span class="number" style="font-size:14px;">1</span></td>
+				<td><span style="color:#1ABC9C; font-size:14px; font-weight:bold;">Ad Details</span></td>
+			</tr>
 			<tr><td>Title</td><td><input type="text" name="title" id="title" value="" size="60"></td></tr>
 			<tr><td><label for="scriptcode">Script</label></td><td><input class="checkbox" type="checkbox" name="scriptcode" value="0" id="scriptcode"/> </td></tr> 
 			<tr class="isscript"><td>Url</td><td><input type="text" name="url" id="url" value="" size="60"></td></tr>
-			<tr><td>*Src</td><td><span class="isscript_src"><input type="text" id="src" name="src" value="" size="60"></span><input type='button' class='button' id='uploadf' value='Upload'></td></tr>
-			<tr class="isscript"><td colspan="2" style="font-style:italic;">Ej: http://domain.com/image.jpg|.png|.gif|.swf</td></tr>
+			<tr><td>*Src</td><td><span class="isscript_src"><input type="text" id="src" name="src" value="" size="60"></span><input type='button' class='button' id='uploadf' value='Upload'>
+				<span>Ej: http://domain.com/image.jpg|.png|.gif|.swf</span></td></tr>
+			<!--properties-->
+			<tr>
+				<td><span class="number" style="font-size:14px;">2</span></td>
+				<td style="color:#1ABC9C; font-size:14px; font-weight:bold;">Ad properties</td>
+			</tr>
 			<tr><td>Zones *</td><td><input type="text" name="keywords" id="keywords" value="" size="30"> <?php
 					$zones = array();
 					$xzones=get_etruel_AdServe_zones();
@@ -327,12 +398,24 @@ function etruel_AdServe_Manage() {
 				<tr><td></td><td><input  type="hidden" name="user" value="<?php echo $user; ?>" id="user"></td></tr>
 			<?php endif; ?>
 			<tr><td>e-mail</td><td><input type="text" name="email" id="email" value="" size="40"></td></tr>
+			<tr>
+				<td><b>Checking Date:</b></td>
+				<td><input type="checkbox" value="Y" id="checkingdate" name="checkingdate"></td>
+			</tr>
+			<tr id="datefields_ads" style="display:none;">
+				<td>Date To:</td>
+				<td>
+					<input class="fieldate time-input" type="text" name="dateto" id="dateto">
+					<span>Date Until</span>
+					<input class="fieldate time-input" type="text" name="dateuntil" id="dateuntil">
+				</td>
+			</tr>
 			<tr><td><input  type="hidden" name="_wpnonce" value="<?php echo $nonce; ?>" id="_wpnonce">
-						
 			</td></tr>
 			<tr><td><input  class="button-primary"type="submit" name="vai" value="Add" id="buttonsave"></td></tr>
 		</table>
 	</form>
+
 	<div id="uploadform" style="display: none;"><div id="closeupload" title="Cancel and close">[x]</div>
 		<form action="<?php echo plugin_dir_url( __FILE__ ) . "processupload.php"; ?>" method="post" enctype="multipart/form-data" id="MyUploadForm">
 			<input name="FileInput" id="FileInput" type="file" />
@@ -420,6 +503,15 @@ function etruel_wp_dropdown_users( $args = '' ) {
     return $html;
 }
 
+//change status banner
+function etruel_AdServe_changeStatus($id) {
+    global $wpdb,$table_prefix;
+   	$table_name = $wpdb->prefix . "adserve";
+   	$query = "UPDATE $table_name SET active=0  WHERE id=$id";
+    $wpdb->query($query);
+}
+
+
 
 function etruel_AdServe_Dashboard() {
 	global $wpdb;
@@ -471,6 +563,8 @@ function etruel_AdServe_CreateTable() {
 	keywords text,
 	weight tinyint,
 	clicks int,
+	dateto timestamp,
+	dateuntil timestamp,
 	UNIQUE KEY id (id)
 	);";
 	$page = 'wp-admin/includes/upgrade.php';  
@@ -478,11 +572,35 @@ function etruel_AdServe_CreateTable() {
 	dbDelta($sql_createtable);
 }
 
+function etruel_altertable_ads(){
+	global $wpdb, $wp_db_version;
+	$table_name = $wpdb->prefix."adserve";
+	$row = $wpdb->get_results(  "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
+	WHERE table_name = '$table_name' AND column_name = 'dateuntil'"  );
+	if(empty($row)){
+	   $wpdb->query("ALTER TABLE  wp_adserve ADD dateto timestamp NULL");
+	   $wpdb->query("ALTER TABLE wp_adserve ADD dateuntil timestamp NULL");
+	   $wpdb->query("ALTER TABLE wp_adserve ADD checkingdate char(1) NULL");
+	}
+}
+function etruel_Adserve_update_banners(){
+	global $wpdb, $wp_db_version;
+	$table_name = $wpdb->prefix."adserve";
+	$datetemp = date_i18n('Y-m-d H:i:s');
+	
+	//Activate Date To
+	$wpdb->query("UPDATE $table_name SET active=1 WHERE checkingdate='Y'  AND UNIX_TIMESTAMP('".$datetemp."') >= UNIX_TIMESTAMP(dateto) ");
+	//Desactivate limit date until
+	$wpdb->query("UPDATE $table_name SET active=0 WHERE checkingdate='Y' AND UNIX_TIMESTAMP('".$datetemp."') >= UNIX_TIMESTAMP(dateuntil)");
+	$wpdb->query("UPDATE $table_name SET active=0 WHERE checkingdate='Y' AND UNIX_TIMESTAMP('".$datetemp."') < UNIX_TIMESTAMP(dateto)");
+}	
+
 function etruel_iif($expression, $returntrue, $returnfalse = '') {
     return ($expression ? $returntrue : $returnfalse);
 } 
 
 function etruel_AdServe_GetBanner($zone='') {
+	etruel_Adserve_update_banners();
 	if($zone==='') return '';
 	global $wpdb;
 	global $userdata;
@@ -511,6 +629,7 @@ function etruel_AdServe_GetBanner($zone='') {
 					$urlimg = $urlbase . $src;
 				}
 				if (( strcasecmp("jpg", $ext) == 0) || ( strcasecmp("gif", $ext) == 0) || ( strcasecmp("png", $ext) == 0)){
+
 						$ret.="<a target='_blank' href='". plugin_dir_url( __FILE__ ) . "adclick.php?id={$rk->id}&_wpnonce={$nonce}' style='margin:0px;border:0px;'><img src='". $urlimg . "' alt='$rk->title' /></a>";
 				}else{
 					$ret = '<script type="text/javascript">swfobject.embedSWF("'. $urlimg. '", "'.$zone.'", "'.$rk->width.'", "'.$rk->height.'", "9.0.0", "expressInstall.swf");</script><div id="'.$zone.'"><p><a href="http://www.adobe.com/go/getflashplayer"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" /></a></p></div>';

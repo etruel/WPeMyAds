@@ -15,13 +15,118 @@ div#table-content {
 }
 
 div#tableform {
-	width: 600px;
 	position: fixed;
-	left: 30%;
-	background: #B5D7B5;
-	border: 4px solid #507C50;
+	left: 28%;
+	width: 600px;
+    padding: 10px 20px;
+    background: #f4f7f8;
+    background: #f4f7f8;
+    border-radius: 8px;
+    font-family: Georgia, "Times New Roman", Times, serif;
 }
 
+form#adform input[type="text"],
+form#adform input[type="date"],
+form#adform input[type="datetime"],
+form#adform input[type="email"],
+form#adform input[type="number"],
+form#adform input[type="search"],
+form#adform input[type="time"],
+form#adform input[type="url"],
+form#adform textarea,
+form#adform select {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    background: rgba(255,255,255,.1);
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    margin: 0;
+    outline: 0;
+    padding: 7px;
+    box-sizing: border-box; 
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box; 
+    background-color: #e8eeef;
+    color:#8a97a0;
+    -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+    margin-bottom: 10px;
+    
+}
+form#adform input[type="text"]:focus,
+form#adform input[type="date"]:focus,
+form#adform input[type="datetime"]:focus,
+form#adform input[type="email"]:focus,
+form#adform input[type="number"]:focus,
+form#adform input[type="search"]:focus,
+form#adform input[type="time"]:focus,
+form#adform input[type="url"]:focus,
+form#adform textarea:focus,
+form#adform select:focus{
+    background: #d2d9dd;
+}
+form#adform select{
+    -webkit-appearance: menulist-button;
+    height:30px;
+    margin-top: 5px;
+}
+form#adform .number {
+    background: #1abc9c;
+    color: #fff;
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    font-size: 0.8em;
+    margin-right: 4px;
+    line-height: 30px;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+    border-radius: 15px 15px 15px 0px;
+}
+
+form#adform input[type="submit"],
+form#adform input[type="button"]
+{
+    color: #FFF;
+    margin: 0 auto;
+    background: #1abc9c;
+    font-size: 16px;
+    text-align: center;
+    font-style: normal;
+    border: 1px solid #16a085;
+    border-width: 1px 1px 3px;
+    margin-bottom: 10px;
+}
+form#adform input[type="submit"]:hover,
+form#adform input[type="button"]:hover
+{
+    background: #109177;
+}
+
+
+
+
+
+/*MODIFY*/
+/*div#tableform{
+	 background:linear-gradient(
+       to left,
+       red 0, 
+       red 33.3%,
+       orange 33.3%, 
+       orange 66.6%, 
+       blue 66.6%, 
+       blue ) 
+       no-repeat !important;
+	   background-size:100% 10px !important;
+	   padding-top:10px !important;
+}
+div#tableform table{
+	background-color: #FFFFFF !important;
+	width: 100% !important;
+	padding: 5px;
+}
+*/
 div#closefrm, #closeupload {
 	float: right;
 	margin: 0 5px 0 0;
@@ -33,6 +138,7 @@ div#closefrm, #closeupload {
 	padding: 5px 5px 20px 20px;
 	width: 460px;
 	border: 4px solid #457EA8;
+	display: none;
 }
 
 textarea#src {

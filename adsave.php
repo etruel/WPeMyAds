@@ -23,8 +23,15 @@ function etruel_AdServe_Bannersave($id) {
     $src = (!empty($_POST['src']))?$_POST['src']:'';
     $width = (!empty($_POST['width']))?$_POST['width']:null;
     $height = (!empty($_POST['height']))?$_POST['height']:null;
-	
-	if ($scriptcode){
+
+	if(sanitize_text_field($_POST['checkingdate'])=='Y'){
+        $vardateto = isset($_POST['dateto']) ? date_i18n('Y-m-d H:i:s',strtotime($_POST['dateto'])) : ''; 
+        $vardateuntil = isset($_POST['dateuntil']) ? date_i18n('Y-m-d H:i:s',strtotime($_POST['dateuntil'])) : '';
+	}else{
+        $vardateto = null;
+        $vardateuntil = null;
+    }
+    if ($scriptcode){
 		$ok = true;
 	}else{
 		$ext =  substr($src, strlen($src)-3,3 );
@@ -48,13 +55,17 @@ function etruel_AdServe_Bannersave($id) {
                             email		='".$_POST['email']."',
                             keywords	='".$_POST['keywords']."',
                             width		= ".$width.",
-                            height		= ".$height."
+                            height		= ".$height.",
+                            dateto      = '".$vardateto."',
+                            dateuntil   = '".$vardateuntil."',
+                            checkingdate  = '".$_POST['checkingdate']."'
+
                         WHERE id=$id";
         } else {       // insert
             $query = "  INSERT INTO $table_name".
-                " (title, scriptcode, url, src, email, keywords, impressions, clicks, width, height) " .
-                "VALUES ('".$_POST['title']."', '".$scriptcode."', '".$_POST['url']."', '".urlencode($src)."', '".$_POST['email']."', '"
-                    .$_POST['keywords']."',0, 0, $width, $height)";
+                " (title, scriptcode, url, src, email,credits, keywords, impressions, clicks, width, height,dateto,dateuntil,checkingdate) " .
+                "VALUES ('".$_POST['title']."', '".$scriptcode."', '".$_POST['url']."', '".urlencode($src)."', '".$_POST['email']."',-1,'"
+                    .$_POST['keywords']."',0, 0, $width, $height, '".$vardateto."', '".$vardateuntil."','".$_POST['checkingdate']."')";
         }
 		//echo $query."<br>";
         $wpdb->query($query);

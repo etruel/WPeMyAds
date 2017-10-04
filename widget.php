@@ -34,9 +34,8 @@ class WPeMyAds extends WP_Widget {
 			
 			# Make the widget content
 			AdServe(trim($instance['zone']));
-			
 			AdServe(trim($instance['zone2']));
-			
+				
 			# After the widget
 			echo $after_widget;
 		}
