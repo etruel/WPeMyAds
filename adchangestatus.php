@@ -2,8 +2,8 @@
 if (!file_exists('../../../wp-config.php')) die ('wp-config.php not found');
 require_once('../../../wp-config.php');
 
-if (isset($_GET['id'])) {
-	Header("Location: ".etruel_AdServe_BannerChangeStatus($_GET['id'],$_GET['active']));
+if (isset(sanitize_text_field($_GET['id']))) {
+	Header("Location: ".etruel_AdServe_BannerChangeStatus(sanitize_text_field($_GET['id']),sanitize_text_field($_GET['active'])));
     return 1;
 }
 

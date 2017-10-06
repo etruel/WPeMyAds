@@ -1,0 +1,179 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WPeMyAds V2.0 beta\n"
+"POT-Creation-Date: 2017-10-06 01:24-0400\n"
+"PO-Revision-Date: 2017-10-06 01:24-0400\n"
+"Last-Translator: \n"
+"Language-Team: NetMdp <tico20bboy@gmail.com>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;_x\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../ad.php:62 ../ad.php:321 ../widget.php:11
+msgid "My Ads"
+msgstr "Mi publicidad"
+
+#: ../ad.php:63
+msgid "Ads Manager"
+msgstr "Administrador de anuncios"
+
+#: ../ad.php:144
+msgid "Edit Ad"
+msgstr "Editar Publicidad"
+
+#: ../ad.php:145
+msgid "Save"
+msgstr "Guardar"
+
+#: ../ad.php:210 ../ad.php:400 ../ad.php:462
+msgid "Add"
+msgstr "Agregar"
+
+#: ../ad.php:211
+msgid "Add ad"
+msgstr "Agregar Publicidad"
+
+#: ../ad.php:321
+msgid "New"
+msgstr "Nuevo"
+
+#: ../ad.php:326 ../ad.php:568
+msgid "Site"
+msgstr "Sitio"
+
+#: ../ad.php:326 ../ad.php:418 ../ad.php:568
+msgid "Zones"
+msgstr "Zonas"
+
+#: ../ad.php:326 ../ad.php:568
+msgid "Active"
+msgstr "Activo"
+
+#: ../ad.php:326 ../ad.php:568
+msgid "Impressions"
+msgstr "Impresiones"
+
+#: ../ad.php:326 ../ad.php:568
+msgid "Clicks"
+msgstr "Clics"
+
+#: ../ad.php:326 ../ad.php:568
+msgid "Ratio"
+msgstr "Proporción"
+
+#: ../ad.php:326 ../ad.php:568
+msgid "Credits"
+msgstr "Creditos"
+
+#: ../ad.php:327 ../ad.php:438
+msgid "User"
+msgstr "Usuario"
+
+#: ../ad.php:328
+msgid "Actions"
+msgstr "Acciones"
+
+#: ../ad.php:350
+msgid "open site on new window"
+msgstr "Abrir sitio en una nueva ventana"
+
+#: ../ad.php:353
+msgid "edit"
+msgstr "Editar"
+
+#: ../ad.php:355
+msgid "user"
+msgstr "usuario"
+
+#: ../ad.php:372
+msgid "Are you sure you want to delete?"
+msgstr "¿Estas seguro que quieres borrarlo?"
+
+#: ../ad.php:399
+msgid "Cancel and close"
+msgstr "Cancelar y cerrar"
+
+#: ../ad.php:400
+msgid "Edit"
+msgstr "Editar"
+
+#: ../ad.php:400
+msgid "Ad"
+msgstr "Publicidad"
+
+#: ../ad.php:406
+msgid "Ad Details"
+msgstr "Detalles de publicidad"
+
+#: ../ad.php:408 ../widget.php:91
+msgid "Title:"
+msgstr "Titulo"
+
+#: ../ad.php:411
+msgid "Upload"
+msgstr "Subir"
+
+#: ../ad.php:416
+msgid "Ad properties"
+msgstr "Propiedades de publicidad"
+
+#: ../ad.php:435
+msgid "Height"
+msgstr "Alto"
+
+#: ../ad.php:436
+msgid "Width"
+msgstr "Ancho"
+
+#: ../ad.php:447
+msgid "Email"
+msgstr "Correo"
+
+#: ../ad.php:449
+msgid "Programming Date"
+msgstr "Fecha Programada"
+
+#: ../ad.php:453
+msgid "Date to"
+msgstr "Desde"
+
+#: ../ad.php:456
+msgid "Date Until"
+msgstr "Hasta"
+
+#: ../myplugins.php:2
+msgid "Knows my plugins"
+msgstr "Conoce mis plugins"
+
+#: ../widget.php:9
+msgid "Muestra los Adserve por zona en cada widget."
+msgstr ""
+
+#: ../widget.php:91
+msgid "Show Title"
+msgstr "Mostrar título"
+
+#: ../widget.php:94
+msgid "1ra Zona:"
+msgstr ""
+
+#: ../widget.php:99
+msgid "2da Zona:"
+msgstr ""
+
+#: ../widget.php:104
+msgid "Logic URL:"
+msgstr "Url Logica"
+
+#: ../widget.php:104
+msgid "Click here to see/hide examples"
+msgstr "Haga clic aquí para ver / ocultar ejemplos"
+
+#, fuzzy
+#~ msgid "Title"
+#~ msgstr "Titulo"

@@ -9,7 +9,7 @@ if (!file_exists('../../../wp-config.php')) die ('wp-config.php not found');
 require_once('../../../wp-config.php');
 
 if (isset($_GET['id'])) {
-	$id  = (int) $_GET['id'];
+	$id  = (int) sanitize_text_field($_GET['id']);
 	$url = etruel_AdServe_BannerClick( $id );
 	if ( !empty( $url )){
 		Header("Location: " . $url);

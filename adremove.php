@@ -3,7 +3,7 @@ if (!file_exists('../../../wp-config.php')) die ('wp-config.php not found');
 require_once('../../../wp-config.php');
 
 if (isset($_GET['id'])) {
-	Header("Location: ".etruel_AdServe_Bannerdelete($_GET['id']));
+	Header("Location: ".etruel_AdServe_Bannerdelete(sanitize_text_field($_GET['id'])));
     return 1;
 }
 

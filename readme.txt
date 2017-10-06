@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: ads, server, banner, post, comment, posts, comments, advertising, adv, server, serve, ad
 Requires at least: 2.9
 Tested up to: 4.0
-Stable tag: 1.0
+Stable tag: 2.0
 License: GPLv3 
 
 WPeMyAds continues AdServe plugin. 
@@ -103,3 +103,9 @@ You can either install it automatically from the WordPress admin, or do it manua
 
 == Upgrade Notice ==
 *Taken Version 0.3 (31 Jan 2008) of AdServe and adds lot of things
+
+
+= 2.0 beta =
+* Improved the visual appearance of the advertising management form
+* Added for Spanish / English languages
+* Added date fields from - to with which we can create vision programming in advertisements stipulated by date and time

@@ -1,5 +1,5 @@
 					<div class="postbox">
-						<h3 class="handle"><?php _e( 'Knows my plugins' );?></h3>
+						<h3 class="handle"><?php _e( 'Knows my plugins','myads' );?></h3>
 						<div class="inside" style="margin: 0 -12px -12px -10px;">
 							<div class="wpeplugname" id="wpebanover"><a href="http://wordpress.org/plugins/wpecounter/" target="_Blank" class="wpelinks">WPeCounter</a>
 							<div id="wpecounterdesc" class="tsmall" style="display:none;">Visits Post(types) counter. Shown in a sortable column the number of visits on lists of posts, pages, etc. Is extremely lightweight because it works with ajax.</div></div>
