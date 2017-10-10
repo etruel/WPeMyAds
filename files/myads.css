@@ -39,8 +39,7 @@ form#adform input[type="time"],
 form#adform input[type="url"],
 form#adform textarea,
 form#adform select {
-    background: rgba(255,255,255,.1);
-    border: none;
+    border: 1px #606060 black;
     border-radius: 4px;
     font-size: 12px;
     margin: 0;
@@ -49,8 +48,7 @@ form#adform select {
     box-sizing: border-box; 
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box; 
-    background-color: #e8eeef;
-    color:#8a97a0;
+    color:black;
     -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
     box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
     margin-bottom: 10px;
