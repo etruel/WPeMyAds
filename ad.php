@@ -245,6 +245,11 @@ function AdServe_admin_head() {
 					jQuery("#dateuntil").val("");
 				}
 			});
+			if(jQuery("#tableform").attr("init-table")=='block'){
+				jQuery('#myads_mask').fadeIn(0,function(){
+					showform("#tableform");
+				});
+			}
 
 			function getFormattedDate(date) {
 			    var day = date.getDate();
@@ -318,7 +323,9 @@ function etruel_AdServe_Manage() {
     //$lastmonth = date('Ym', mktime(0, 0, 0, date("m")-1 , date("d") - 1, date("Y")));
     //$yesterday = date('Ymd', time()-86400);
 	?>	
-	<div id="myads_mask"  style="display:none;position:fixed; width:100%; height:100%; background-color:black; z-index:999999; left:0; top:0; opacity:0.5;"></div>
+	<div id="myads_mask"  style="display:none; position:fixed; width:100%; height:100%; background-color:black; z-index:999999; left:0; top:0; opacity:0.5;" 
+
+	></div>
 	<div class='wrap'>
 		<h2><?php  echo _e('My Ads','myads'); ?></h2>  <input type='button' class='button' name='reset' id='reset' value='<?php echo _e("New","myads"); ?>'>
 	<div id="side-info-column" class="inner-sidebar">
@@ -395,7 +402,7 @@ function etruel_AdServe_Manage() {
 	$nonce = wp_create_nonce  ('adsave-nonce');
 	$imgnonce = wp_create_nonce  ('adimg-nonce');
 	?>
-	<div id="tableform" style="display: <?php echo (!$first)?"block":"none";  ?>;">
+	<div id="tableform" init-table='<?php echo (!$first)?"block":"none";?>'  style="display: <?php echo (!$first)?"none":"none";  ?>;">
    	<table><tr>
 	<td>
 		<div class="wrap"><div id="closefrm" title="<?php echo _e('Cancel and close','myads'); ?>">[x]</div>
