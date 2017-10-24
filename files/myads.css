@@ -15,8 +15,10 @@ div#table-content {
 }
 
 div#tableform {
-	position: fixed;
-	left: 28%;
+	position: absolute;
+	left: calc(50% - 100px);
+    transform: translate(-50%, 0);
+    top: 50px;
 	width: 600px;
     padding: 10px 20px;
     background: #f4f7f8;
@@ -139,6 +141,7 @@ div#closefrm, #closeupload {
 }
 #uploadform{
 	position: fixed;
+	top: 240px;
 	background: #AACCE5;
 	padding: 5px 5px 20px 20px;
 	width: 460px;

@@ -8,8 +8,7 @@ class WPeMyAds extends WP_Widget {
 	function WPeMyAds(){
 		$widget_ops = array('classname' => 'widget_WPeMyAds', 'description' => __( "Muestra los Adserve por zona en cada widget.") );
 		$control_ops = array('width' => 270, 'height' => 300);
-		$this->WP_Widget('WPeMyAds', __('My Ads') , $widget_ops, $control_ops);
-//		$this->WP_Widget('WPeMyAds', __('My Ads'), $widget_ops, $control_ops);
+		parent::__construct('WPeMyAds', __('My Ads') , $widget_ops, $control_ops);
 	}
 	
 	/**

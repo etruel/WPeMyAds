@@ -132,11 +132,7 @@ function AdServe_admin_head() {
 		}
 		
 		function showform(formid){
-			//alert(jQuery(window).width());
-			fleft = jQuery(window).width()/2 - jQuery(formid).width()/2 ;
-			ftop = jQuery(window).height()/2 - jQuery(formid).height()/2 ;
-			jQuery(formid).attr("style", 'left:'+fleft+"px;top:"+ ftop+"px;");
-			//jQuery(formid).css("top", top);
+
 			jQuery(formid).fadeIn();
 		}
 		
@@ -446,7 +442,7 @@ function etruel_AdServe_Manage() {
 			<?php if(etruel_check_user_role('administrator') ) : ?>
 				<tr><td><?php echo _e('User','myads'); ?></td><td>
 				<?php 
-					$userobj = get_user_by( 'login', $user );
+					$userobj = wp_get_current_user();
 					$userid = $userobj->ID;
 					etruel_wp_dropdown_users(array('show'=>'user_login', 'name' => 'user', 'selected' =>$userid,'include_selected' => true )); 
 				?></td></tr>
