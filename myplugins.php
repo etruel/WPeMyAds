@@ -1,3 +1,32 @@
+
+
+					<!--SELECT EDITOR ALL-->
+					<?php 
+						if(etruel_check_user_role('administrator')){
+						$myadsmanager = get_option('wpmyads_manager');
+					?>
+					<div class="postbox" style="padding:10px;">
+						<h3 class="handle"><?php _e( 'Settings','myads' );?></h3>
+						<p><?php _e( 'Select manager to manage ads','myads' );?></p>
+						<div class="inside" style="margin: 0 -12px -12px -10px;">
+							<?php
+								$wpemyads_manager = get_users();
+							?>
+							<select name="wpemyads_manager" id="wpemyads_manager" style="width:100%;">
+								<?php foreach ($wpemyads_manager as $key) {?>
+										<option <?php selected($myadsmanager,$key->data->ID); ?>  value="<?php echo $key->data->ID; ?>"><?php echo $key->data->display_name; ?></option>
+								<?php 
+							}
+									?>
+							 </select>
+							 <br>
+							 <br>
+							 <input type="button" class="button button-primary" id="wpemyads_save_manager" value="<?php _e( 'Save','myads' ); ?>">
+							<span class="wpmyads_message_ajax" style="display:none;"></span>
+						</div>
+					</div>
+					<?php } ?>
+
 					<div class="postbox">
 						<h3 class="handle"><?php _e( 'Knows my plugins','myads' );?></h3>
 						<div class="inside" style="margin: 0 -12px -12px -10px;">
@@ -19,3 +48,25 @@
 							<p></p>
 						</div>
 					</div>
+<script type="text/javascript">
+	<?php 
+		$nonce = wp_create_nonce('wpemyads_manager_nonce' );
+	?>
+	jQuery(document).ready(function($){
+		$("#wpemyads_save_manager").click(function() {
+			$(".wpmyads_message_ajax").text('Saving Manager....').show(0);
+			var wpmyads_manager = $("#wpemyads_manager").val();
+			data = {
+				'action': 'save_wpmyads_manager',
+				_ajax_nonce : "<?php echo $nonce; ?>",
+				'wpmyads_manager':wpmyads_manager
+			};
+			// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+			jQuery.post(ajaxurl, data, function(response) {
+				$(".wpmyads_message_ajax").text('Save Manager!').delay(1000).fadeOut(500);
+				//response
+			});
+		});
+	});
+
+</script>

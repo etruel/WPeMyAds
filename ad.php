@@ -354,7 +354,8 @@ function etruel_AdServe_Manage() {
 		}else{
 			$tdtitle .= "<a target='_Blank' title='". __('open site on new window','myads') ."' href='{$rk->url}'><strong>{$rk->title}</strong></a>";
 		}
-		if(etruel_check_user_role('administrator') || $rk->user == $user_login || $user ==$user_login )
+	
+		if(etruel_check_user_role('administrator') || $rk->user == $user_login || $user ==$user_login   ||  (get_option('wpmyads_manager') == get_current_user_id()) )
 			$tdtitle .= "<br /><a class='adedit' title='".__('edit','myads')."' onclick=\"".$editform."\">".__('edit','myads')."</a>";
 		else 
 			$tdtitle .=  "<br />" . __("user","myads"). ": <b>$user</b>";
@@ -371,7 +372,7 @@ function etruel_AdServe_Manage() {
 		print "<td>".$rk->credits."</td>\n";
 		if(etruel_check_user_role('administrator'))  print "<td>$user</th>";
 
-		if(etruel_check_user_role('administrator') || $rk->user == $user_login || $user ==$user_login ) {
+		if(etruel_check_user_role('administrator') || $rk->user == $user_login || $user ==$user_login  || (get_option('wpmyads_manager') == get_current_user_id())) {
 			print "<td><a class='adaction' title='edit' onclick=\"".$editform."\"><img src='" .plugin_dir_url( __FILE__ ) . "files/edit.gif'></a>";
 			$url= plugin_dir_url( __FILE__ ) . "adremove.php?id=$rk->id";
 			print "<a class='adaction' href=$url onclick=\"return confirm(".__('Are you sure you want to delete?','myads').")\">";
@@ -718,5 +719,18 @@ function etruel_AdServe_Filter($the_content) {
 add_action('admin_init','wpemyads_load_textdomain');
 add_action('admin_menu', 'etruel_AdServe_AddPages');
 add_filter('the_content', 'etruel_AdServe_Filter', 99);
+
+
+ 
+add_action( 'wp_ajax_save_wpmyads_manager', 'save_wpmyads_manager_callback' );
+function save_wpmyads_manager_callback(){
+	check_ajax_referer('wpemyads_manager_nonce');
+	$wpmyads_manager = sanitize_text_field($_REQUEST['wpmyads_manager']);
+	update_option('wpmyads_manager',$wpmyads_manager);
+	wp_die();
+}
+
+
+
 
 ?>
