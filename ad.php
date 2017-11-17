@@ -617,6 +617,7 @@ function etruel_AdServe_CreateTable() {
 	clicks int,
 	dateto timestamp,
 	dateuntil timestamp,
+	checkingdate char(1),
 	UNIQUE KEY id (id)
 	);";
 	$page = 'wp-admin/includes/upgrade.php';  
